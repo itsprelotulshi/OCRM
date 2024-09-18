@@ -1,0 +1,69 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Project {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  team      Team?    @relation(fields: [teamId], references: [id])
+  teamId    String?
+  updatedAt DateTime @updatedAt
+}
+
+model Client {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Task {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model TeamLeader {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  teams     Team[]
+  updatedAt DateTime @updatedAt
+}
+
+model Employee {
+  contactInfo String?
+  createdAt   DateTime @default(now())
+  id          String   @id @default(cuid())
+  name        String?
+  role        String?
+  team        Team?    @relation(fields: [teamId], references: [id])
+  teamId      String?
+  updatedAt   DateTime @updatedAt
+}
+
+model Team {
+  createdAt    DateTime    @default(now())
+  employees    Employee[]
+  id           String      @id @default(cuid())
+  name         String?
+  projects     Project[]
+  teamLeader   TeamLeader? @relation(fields: [teamLeaderId], references: [id])
+  teamLeaderId String?
+  updatedAt    DateTime    @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
