@@ -21,6 +21,8 @@ export const ProjectList = (props: ListProps): React.ReactElement => {
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <DateField source="createdAt" label="Created At" />
         <TextField label="ID" source="id" />
+        <TextField label="progress" source="progress" />
+        <TextField label="status" source="status" />
         <ReferenceField label="team" source="team.id" reference="Team">
           <TextField source={TEAM_TITLE_FIELD} />
         </ReferenceField>

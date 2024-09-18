@@ -365,6 +365,8 @@ export class TeamControllerBase {
       select: {
         createdAt: true,
         id: true,
+        progress: true,
+        status: true,
 
         team: {
           select: {

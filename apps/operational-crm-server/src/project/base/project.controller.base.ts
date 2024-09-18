@@ -61,6 +61,8 @@ export class ProjectControllerBase {
       select: {
         createdAt: true,
         id: true,
+        progress: true,
+        status: true,
 
         team: {
           select: {
@@ -92,6 +94,8 @@ export class ProjectControllerBase {
       select: {
         createdAt: true,
         id: true,
+        progress: true,
+        status: true,
 
         team: {
           select: {
@@ -124,6 +128,8 @@ export class ProjectControllerBase {
       select: {
         createdAt: true,
         id: true,
+        progress: true,
+        status: true,
 
         team: {
           select: {
@@ -173,6 +179,8 @@ export class ProjectControllerBase {
         select: {
           createdAt: true,
           id: true,
+          progress: true,
+          status: true,
 
           team: {
             select: {
@@ -213,6 +221,8 @@ export class ProjectControllerBase {
         select: {
           createdAt: true,
           id: true,
+          progress: true,
+          status: true,
 
           team: {
             select: {

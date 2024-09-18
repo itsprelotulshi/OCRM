@@ -18,10 +18,13 @@ import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Task } from "./Task";
 import { TaskCountArgs } from "./TaskCountArgs";
 import { TaskFindManyArgs } from "./TaskFindManyArgs";
 import { TaskFindUniqueArgs } from "./TaskFindUniqueArgs";
+import { CreateTaskArgs } from "./CreateTaskArgs";
+import { UpdateTaskArgs } from "./UpdateTaskArgs";
 import { DeleteTaskArgs } from "./DeleteTaskArgs";
 import { TaskService } from "../task.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
@@ -71,6 +74,43 @@ export class TaskResolverBase {
       return null;
     }
     return result;
+  }
+
+  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @graphql.Mutation(() => Task)
+  @nestAccessControl.UseRoles({
+    resource: "Task",
+    action: "create",
+    possession: "any",
+  })
+  async createTask(@graphql.Args() args: CreateTaskArgs): Promise<Task> {
+    return await this.service.createTask({
+      ...args,
+      data: args.data,
+    });
+  }
+
+  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @graphql.Mutation(() => Task)
+  @nestAccessControl.UseRoles({
+    resource: "Task",
+    action: "update",
+    possession: "any",
+  })
+  async updateTask(@graphql.Args() args: UpdateTaskArgs): Promise<Task | null> {
+    try {
+      return await this.service.updateTask({
+        ...args,
+        data: args.data,
+      });
+    } catch (error) {
+      if (isRecordNotFoundError(error)) {
+        throw new GraphQLError(
+          `No resource was found for ${JSON.stringify(args.where)}`
+        );
+      }
+      throw error;
+    }
   }
 
   @graphql.Mutation(() => Task)

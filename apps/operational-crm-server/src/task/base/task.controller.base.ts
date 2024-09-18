@@ -51,6 +51,8 @@ export class TaskControllerBase {
       select: {
         createdAt: true,
         id: true,
+        progress: true,
+        status: true,
         updatedAt: true,
       },
     });
@@ -75,6 +77,8 @@ export class TaskControllerBase {
       select: {
         createdAt: true,
         id: true,
+        progress: true,
+        status: true,
         updatedAt: true,
       },
     });
@@ -100,6 +104,8 @@ export class TaskControllerBase {
       select: {
         createdAt: true,
         id: true,
+        progress: true,
+        status: true,
         updatedAt: true,
       },
     });
@@ -134,6 +140,8 @@ export class TaskControllerBase {
         select: {
           createdAt: true,
           id: true,
+          progress: true,
+          status: true,
           updatedAt: true,
         },
       });
@@ -167,6 +175,8 @@ export class TaskControllerBase {
         select: {
           createdAt: true,
           id: true,
+          progress: true,
+          status: true,
           updatedAt: true,
         },
       });

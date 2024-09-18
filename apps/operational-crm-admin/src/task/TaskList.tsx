@@ -8,6 +8,8 @@ export const TaskList = (props: ListProps): React.ReactElement => {
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <DateField source="createdAt" label="Created At" />
         <TextField label="ID" source="id" />
+        <TextField label="progress" source="progress" />
+        <TextField label="status" source="status" />
         <DateField source="updatedAt" label="Updated At" />{" "}
       </Datagrid>
     </List>

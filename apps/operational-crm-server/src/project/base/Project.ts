@@ -11,7 +11,18 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, ValidateNested, IsOptional } from "class-validator";
+
+import {
+  IsDate,
+  IsString,
+  IsNumber,
+  Min,
+  Max,
+  IsOptional,
+  MaxLength,
+  ValidateNested,
+} from "class-validator";
+
 import { Type } from "class-transformer";
 import { Team } from "../../team/base/Team";
 
@@ -32,6 +43,31 @@ class Project {
   @IsString()
   @Field(() => String)
   id!: string;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsNumber()
+  @Min(-999999999)
+  @Max(999999999)
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  progress!: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @MaxLength(1000)
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  status!: string | null;
 
   @ApiProperty({
     required: false,

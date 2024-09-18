@@ -10,6 +10,8 @@ generator client {
 model Project {
   createdAt DateTime @default(now())
   id        String   @id @default(cuid())
+  progress  Float?
+  status    String?
   team      Team?    @relation(fields: [teamId], references: [id])
   teamId    String?
   updatedAt DateTime @updatedAt
@@ -24,6 +26,8 @@ model Client {
 model Task {
   createdAt DateTime @default(now())
   id        String   @id @default(cuid())
+  progress  Float?
+  status    String?
   updatedAt DateTime @updatedAt
 }
 
