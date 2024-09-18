@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   push:
     branches: ["*"]
-    paths: ["apps/operational-crm-server"]
+    paths: ["apps/server"]
 
 jobs:
   continuous-integration:
@@ -25,12 +25,12 @@ jobs:
 
       - name: install dependencies
         run: npm install
-        working-directory: apps/operational-crm-server
+        working-directory: apps/server
 
       - name: build
         run: npm run build
-        working-directory: apps/operational-crm-server
+        working-directory: apps/server
 
       - name: test
         run: npm test
-        working-directory: apps/operational-crm-server
+        working-directory: apps/server

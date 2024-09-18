@@ -1,0 +1,76 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Client {
+  createdAt DateTime  @default(now())
+  id        String    @id @default(cuid())
+  projects  Project[]
+  updatedAt DateTime  @updatedAt
+}
+
+model Project {
+  client    Client?  @relation(fields: [clientId], references: [id])
+  clientId  String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  progress  Float?
+  status    String?
+  tasks     Task[]
+  team      Team?    @relation(fields: [teamId], references: [id])
+  teamId    String?
+  updatedAt DateTime @updatedAt
+}
+
+model Task {
+  assignedEmployee String?
+  createdAt        DateTime @default(now())
+  id               String   @id @default(cuid())
+  progress         Float?
+  project          Project? @relation(fields: [projectId], references: [id])
+  projectId        String?
+  status           String?
+  team             Team?    @relation(fields: [teamId], references: [id])
+  teamId           String?
+  teamLeader       String?
+  updatedAt        DateTime @updatedAt
+}
+
+model Employee {
+  contactInfo String?
+  createdAt   DateTime @default(now())
+  id          String   @id @default(cuid())
+  name        String?
+  role        String?
+  team        Team?    @relation(fields: [teamId], references: [id])
+  teamId      String?
+  updatedAt   DateTime @updatedAt
+  userRole    String?
+}
+
+model Team {
+  createdAt DateTime   @default(now())
+  employees Employee[]
+  id        String     @id @default(cuid())
+  name      String?
+  projects  Project[]
+  tasks     Task[]
+  updatedAt DateTime   @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
